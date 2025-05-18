@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST_PROD}:${DB_PORT_PROD}/${DB_NAME_PROD}?createDatabaseIfNotExist=true
+    username: ${DB_USER_PROD}
+    password: ${DB_PASSWORD_PROD}
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    expiration-time: ${JWT_EXP_TIME}
+
+springdoc:
+  swagger-ui:
+    enabled: false
+
+cors:
+  allowedOrigins: ${CLIENT_URL_PROD}
+
+logging:
+  level:
+    com.backend_project_template: INFO

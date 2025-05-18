@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST_DEV}:${DB_PORT_DEV}/${DB_NAME_DEV}?createDatabaseIfNotExist=true
+    username: ${DB_USER_DEV}
+    password: ${DB_PASSWORD_DEV}
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # Drops and recreates the schema on each run. TODO : Switch to update once DatabaseInitializer is completely done
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    expiration-time: ${JWT_EXP_TIME}
+
+springdoc:
+  swagger-ui:
+    enabled: true
+
+cors:
+  allowedOrigins: ${CLIENT_URL_DEV}
+
+logging:
+  level:
+    com.backend_project_template: DEBUG

@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST_STAGING}:${DB_PORT_STAGING}/${DB_NAME_STAGING}?createDatabaseIfNotExist=true
+    username: ${DB_USER_STAGING}
+    password: ${DB_PASSWORD_STAGING}
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET_KEY}
+    expiration-time: ${JWT_EXP_TIME}
+
+springdoc:
+  swagger-ui:
+    enabled: false
+
+cors:
+  allowedOrigins: ${CLIENT_URL_STAGING}
+
+logging:
+  level:
+    com.backend_project_template: INFO

@@ -1,0 +1,23 @@
+# Ignorer les fichiers à la raçine du projet
+/*.json
+/*.md
+docker-compose.yml
+Dockerfile
+mvnw
+mvnw.cmd
+pom.xml
+.prettierrc
+
+# Ignorer les fichiers de test
+**/src/test/**
+
+# Ignorer les dossiers spécifiques
+/target
+/node_modules
+/husky-scripts
+/.mvn
+/.husky
+.github/**
+src/main/resources/**
+
+
