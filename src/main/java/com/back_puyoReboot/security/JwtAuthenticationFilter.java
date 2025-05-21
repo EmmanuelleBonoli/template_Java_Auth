@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -39,6 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
   private boolean authenticateRequest(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String jwt = parseJwt(request);
     if (jwt == null) return true;
+
 
     if (!jwtService.validateJwtToken(jwt, response)) {
       sendUnauthorizedResponse(response);
