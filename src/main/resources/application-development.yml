@@ -26,3 +26,6 @@ cors:
 logging:
   level:
     com.backend_project_template: DEBUG
+
+server:
+  port: ${SERVER_PORT_DEV}
