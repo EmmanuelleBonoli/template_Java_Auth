@@ -35,6 +35,15 @@ public class DatabaseInitializer {
                         "MajorManu",
                         "/images/User/DonkeyKong.png",
                         1L
+                ),
+                new User(
+                        new HashSet<>(List.of(UserEnumType.ROLE_PLAYER)),
+                        AccountEnumType.ACTIVE,
+                        "$2a$10$jw6BeI/txUaC1BQNGYZn4.hs5wpmLhe2uYpTBB40oUveFE3ZRQYQq", // password is "Password"
+                        "player@gmail.com",
+                        "Player1",
+                        "/images/User/DonkeyKong.png",
+                        2L
                 )
         );
 

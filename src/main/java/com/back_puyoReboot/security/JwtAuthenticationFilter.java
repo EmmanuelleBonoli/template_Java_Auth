@@ -9,7 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,12 +17,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserDetailsService userDetailsService;
     private final AntPathMatcher pathMatcher = new AntPathMatcher();
 
-    public JwtAuthenticationFilter(JwtService jwtService, UserDetailsService userDetailsService) {
+    public JwtAuthenticationFilter(JwtService jwtService) {
         this.jwtService = jwtService;
-        this.userDetailsService = userDetailsService;
     }
 
     @Override
@@ -50,29 +47,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return false;
         }
 
-//    UsernamePasswordAuthenticationToken authentication = setAuthenticationContext(jwt, request);
-//
-//    if (
-//      isAssociationUrl(request) &&
-//      authentication.getAuthorities().stream().noneMatch(auth -> auth.getAuthority().equals(UserEnumType.ROLE_ASSOCIATION.name()))
-//    ) {
-//      sendUnauthorizedResponse(response);
-//      return false;
-//    }
-
         return true;
     }
-
-//  private UsernamePasswordAuthenticationToken setAuthenticationContext(String jwt, HttpServletRequest request) {
-//    String username = jwtService.extractClaims(jwt).getSubject();
-//    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-//
-//    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-//    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-//    SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//    return authentication;
-//  }
 
     private void sendUnauthorizedResponse(HttpServletResponse response) throws IOException {
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
