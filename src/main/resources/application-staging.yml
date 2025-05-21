@@ -19,3 +19,6 @@ cors:
 logging:
   level:
     com.backend_project_template: INFO
+
+server:
+  port: ${SERVER_PORT_STAGING}
