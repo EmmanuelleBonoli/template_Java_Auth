@@ -4,8 +4,5 @@ import java.util.*;
 
 public class SecurityConstants {
 
-    public static final Set<String> PUBLIC_URLS = new HashSet<>(
-            Arrays.asList("/auth/**")
-    );
-
+  public static final Set<String> PUBLIC_URLS = new HashSet<>(Arrays.asList("/auth/**"));
 }
