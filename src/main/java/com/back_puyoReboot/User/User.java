@@ -2,12 +2,10 @@ package com.back_puyoReboot.User;
 
 import com.back_puyoReboot.core.BaseEntity;
 import jakarta.persistence.*;
-
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,158 +13,152 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 public class User extends BaseEntity implements UserDetails {
 
-    public static final int EMAIL_MAX_LENGTH = 320;
-    public static final int PLAYER_NAME_LENGTH = 10;
+  public static final int EMAIL_MAX_LENGTH = 320;
+  public static final int PLAYER_NAME_LENGTH = 10;
 
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(fetch = FetchType.EAGER)
-    private Set<UserEnumType> roles = new HashSet<>();
+  @Column(nullable = false, length = EMAIL_MAX_LENGTH, unique = true)
+  private String email;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private AccountEnumType accountStatus;
+  @Column(nullable = false)
+  private String hashedPassword;
 
-    @Column(nullable = false)
-    private String hashedPassword;
+  @Column(nullable = false, length = PLAYER_NAME_LENGTH)
+  private String playerName;
 
-    @Column(nullable = false, length = EMAIL_MAX_LENGTH, unique = true)
-    private String email;
+  @Column(nullable = false)
+  private String avatar = "/images/User/Avatar.png";
 
-    @Column(nullable = false, length = PLAYER_NAME_LENGTH)
-    private String playerName;
+  @Column(nullable = false, unique = true)
+  private Long playerNumber;
 
-    @Column(nullable = false)
-    private String avatar = "/images/User/Avatar.png";
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private AccountEnumType accountStatus;
 
-    @Column(nullable = false, unique = true)
-    Long playerNumber;
+  @Enumerated(EnumType.STRING)
+  @ElementCollection(fetch = FetchType.EAGER)
+  private Set<UserEnumType> roles = new HashSet<>();
 
-    // Necessary to have an empty constructor to instance object.
-    public User() {
-    }
+  // Necessary to have an empty constructor to instance object.
+  public User() {}
 
-    public User(
-            Set<UserEnumType> roles,
-            AccountEnumType accountStatus,
-            String hashedPassword,
-            String email,
-            String playerName,
-            String avatar,
-            Long playerNumber
-    ) {
-        this.roles = roles;
-        this.accountStatus = accountStatus;
-        this.hashedPassword = hashedPassword;
-        this.email = email;
-        this.playerName = playerName;
-        this.avatar = avatar;
-        this.playerNumber = playerNumber;
-    }
+  public User(
+    Set<UserEnumType> roles,
+    AccountEnumType accountStatus,
+    String hashedPassword,
+    String email,
+    String playerName,
+    String avatar,
+    Long playerNumber
+  ) {
+    this.roles = roles;
+    this.accountStatus = accountStatus;
+    this.hashedPassword = hashedPassword;
+    this.email = email;
+    this.playerName = playerName;
+    this.avatar = avatar;
+    this.playerNumber = playerNumber;
+  }
 
-    public User(
-            Set<UserEnumType> roles,
-            AccountEnumType accountStatus,
-            String hashedPassword,
-            String email
-    ) {
-        this.roles = roles;
-        this.accountStatus = accountStatus;
-        this.hashedPassword = hashedPassword;
-        this.email = email;
-    }
+  public User(Set<UserEnumType> roles, AccountEnumType accountStatus, String hashedPassword, String email) {
+    this.roles = roles;
+    this.accountStatus = accountStatus;
+    this.hashedPassword = hashedPassword;
+    this.email = email;
+  }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return roles.stream().map(Enum::name).map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
-    }
+  public AccountEnumType getAccountStatus() {
+    return accountStatus;
+  }
 
-    @Override
-    public String getPassword() {
-        return hashedPassword;
-    }
+  public void setAccountStatus(AccountEnumType accountStatus) {
+    this.accountStatus = accountStatus;
+  }
 
-    @Override
-    public String getUsername() {
-        return email;
-    }
+  public String getHashedPassword() {
+    return hashedPassword;
+  }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        // return true - TODO complete
-        return UserDetails.super.isAccountNonExpired();
-    }
+  public void setHashedPassword(String hashed_password) {
+    this.hashedPassword = hashedPassword;
+  }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        // return true - TODO complete
-        return UserDetails.super.isAccountNonLocked();
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        // return true - TODO complete
-        return UserDetails.super.isCredentialsNonExpired();
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    @Override
-    public boolean isEnabled() {
-        // return true - TODO complete
-        return UserDetails.super.isEnabled();
-    }
+  public Set<UserEnumType> getRoles() {
+    return roles;
+  }
 
-    public AccountEnumType getAccountStatus() {
-        return accountStatus;
-    }
+  public void setRoles(Set<UserEnumType> roles) {
+    this.roles = roles;
+  }
 
-    public void setAccountStatus(AccountEnumType accountStatus) {
-        this.accountStatus = accountStatus;
-    }
+  public String getPlayerName() {
+    return playerName;
+  }
 
-    public String getHashedPassword() {
-        return hashedPassword;
-    }
+  public void setPlayerName(String playerName) {
+    this.playerName = playerName;
+  }
 
-    public void setHashedPassword(String hashed_password) {
-        this.hashedPassword = hashedPassword;
-    }
+  public String getAvatar() {
+    return avatar;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public void setAvatar(String avatar) {
+    this.avatar = avatar;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public Long getPlayerNumber() {
+    return playerNumber;
+  }
 
-    public Set<UserEnumType> getRoles() {
-        return roles;
-    }
+  public void setPlayerNumber(Long playerNumber) {
+    this.playerNumber = playerNumber;
+  }
 
-    public void setRoles(Set<UserEnumType> roles) {
-        this.roles = roles;
-    }
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return roles.stream().map(Enum::name).map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+  }
 
-    public String getPlayerName() {
-        return playerName;
-    }
+  @Override
+  public String getPassword() {
+    return hashedPassword;
+  }
 
-    public void setPlayerName(String playerName) {
-        this.playerName = playerName;
-    }
+  @Override
+  public String getUsername() {
+    return email;
+  }
 
-    public String getAvatar() {
-        return avatar;
-    }
+  @Override
+  public boolean isAccountNonExpired() {
+    // return true - TODO complete
+    return UserDetails.super.isAccountNonExpired();
+  }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
-    }
+  @Override
+  public boolean isAccountNonLocked() {
+    // return true - TODO complete
+    return UserDetails.super.isAccountNonLocked();
+  }
 
-    public Long getPlayerNumber() {
-        return playerNumber;
-    }
+  @Override
+  public boolean isCredentialsNonExpired() {
+    // return true - TODO complete
+    return UserDetails.super.isCredentialsNonExpired();
+  }
 
-    public void setPlayerNumber(Long playerNumber) {
-        this.playerNumber = playerNumber;
-    }
+  @Override
+  public boolean isEnabled() {
+    // return true - TODO complete
+    return UserDetails.super.isEnabled();
+  }
 }
